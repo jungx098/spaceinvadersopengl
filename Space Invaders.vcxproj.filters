@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{e2edc8af-4d4a-46ba-89a6-b4aa2fa9896c}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\3DS Loader">
+      <UniqueIdentifier>{e96f6e46-c0b5-441d-997b-2794c73fe188}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{48810014-080b-450b-ae00-ecefb6d2f9d2}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Header Files\3DS Loader H">
+      <UniqueIdentifier>{ccfaec04-e845-4d19-93ad-ae4aefdf7fbc}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{60898bbe-5d35-4d71-8583-1721caa4e33b}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;wav;mp3</Extensions>
+    </Filter>
+    <Filter Include="Other Files">
+      <UniqueIdentifier>{28b6a29d-3f27-49b1-bf29-3484df583949}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="si_Basecode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="si_Font.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="si_Fps.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="si_Functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="si_Loading.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="si_Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="si_Particles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="si_Resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="si_Textures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="si_World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="si_3DS.cpp">
+      <Filter>Source Files\3DS Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="si_3DS_MemoryFile.cpp">
+      <Filter>Source Files\3DS Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="si_3DS_Texture.cpp">
+      <Filter>Source Files\3DS Loader</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="si_Basecode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="si_Font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="si_Fps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="si_Functions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="si_Loading.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="si_Main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="si_Particles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="si_Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="si_Textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="si_World.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="si_3DS.h">
+      <Filter>Header Files\3DS Loader H</Filter>
+    </ClInclude>
+    <ClInclude Include="si_3DS_MemoryFile.h">
+      <Filter>Header Files\3DS Loader H</Filter>
+    </ClInclude>
+    <ClInclude Include="si_3DS_Texture.h">
+      <Filter>Header Files\3DS Loader H</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\1_music_jt_strng.xm">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\2_music_1mmsan.oxm">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\3dgmove.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\applause.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\barre.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\barre3d.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\bonus.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\bonus1.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\cadre_centre.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\cadre_centre.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\cadre_centre_long.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\cadre_contour.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\cadre_contour.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\cadre_energy.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\cadre_energy_contour.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\cadre_life.gif">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\cadre_life.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\chiffre0.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\chiffre1.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\chiffre2.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\chiffre3.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\chiffre4.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\chiffre5.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\chiffre6.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\chiffre7.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\chiffre8.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\chiffre9.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\cross.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\descent.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\equalizer.gif">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\equalizer.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\equalizer_barre.gif">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\explosion.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="models\F02_512.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="models\fighter_laser.3ds">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\flag_en.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\flag_es.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\flag_fr.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="fmod.dll">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\fond_earth_moon.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\fond_espace.gif">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\fond_galaxy1.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\fond_planete.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\fond_skybox.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\fond_skybox.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\fond_skybox2.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\font.tga">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\game_about_button_mute.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\game_about_button_play.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\game_loading.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\game_startup.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\game_startup_internet.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\game_startup_internet_over.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\hand.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\hand_closed.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\hiscore.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\icon_app.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\icon_music.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\key.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\lives.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="models\missile.3ds">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\particle.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\particle2.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\particle2.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\particle3.gif">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\particle3.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\particle3_3d.gif">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\particule4.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\pixel_vert.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\pixel_vert3d.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="models\player.3ds">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\player.tga">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\player3d.tga">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\png1.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\powerup.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\respawn.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="models\S02_5121.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\score.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\shield_charge.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="models\ship.3ds">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\ship1.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\ship1_b.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\ship2.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\ship2_b.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\ship3.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\ship3_b.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\shoot.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\shoot_3d.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\sphere.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="models\sphere_o.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="models\sphere_ogive.3ds">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\super_ship.tga">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="models\supership.3ds">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\text_bonus.gif">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\text_weapon.gif">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\tir.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\tir_3d_base.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\tir_3d_base_dark_backgrd.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\tir_3d_base_double.jpg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="images\tir_ship.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="sounds\weapon.mp3">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Readme.txt">
+      <Filter>Other Files</Filter>
+    </None>
+    <None Include="Readme_es.txt">
+      <Filter>Other Files</Filter>
+    </None>
+    <None Include="Readme_fr.txt">
+      <Filter>Other Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
