@@ -161,6 +161,7 @@ int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 	}
 
 	int frames = 0;
+	int play_frames = 0;
 	bool running = true;
 	Uint32 started = SDL_GetTicks();
 	while (running)
@@ -218,6 +219,7 @@ int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 			Update(0, &window);
 			GameLogic(&window);
 			Draw(&window);
+			play_frames++;
 			break;
 		default:
 			running = false;
@@ -227,7 +229,23 @@ int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 		if (game_step != 2)
 			SDL_GL_SwapWindow(sdl_window);
 		frames++;
-		if (selftest && (game_step >= 4 || SDL_GetTicks() - started > 20000))
+		if (selftest && play_frames >= 3)
+		{
+			int lit = 0;
+			unsigned char sample[4];
+			for (int y = 40; y < 440; y += 20)
+			{
+				for (int x = 40; x < 600; x += 20)
+				{
+					glReadPixels(x, y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, sample);
+					if (sample[0] || sample[1] || sample[2])
+						lit++;
+				}
+			}
+			std::printf("playfield_samples: %d\n", lit);
+			break;
+		}
+		if (selftest && SDL_GetTicks() - started > 20000)
 			break;
 	}
 
