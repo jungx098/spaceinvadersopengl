@@ -33,11 +33,11 @@ cmake --build build
 - [x] **5. Disk assets.** `FindResource` reads `images/`, `sounds/`, and `models/` using the paths in `resource.rc`. BMP, TGA, JPG, and PNG loads succeed. `DWORD` stays 32-bit so the texture pixel loops match the Windows layout.
 - [x] **6. Loading screen.** `_beginthread` starts the loader on a pthread. The loader swaps its own buffers while `game_step` is 2. `SPACEINVADERS_SELFTEST=1` prints `game_step: 4`.
 - [x] **7. Input.** SDL key events fill `Keys::keyDown` with the game's virtual-key codes. Left mouse drag updates `angle_x` and `angle_y`. Escape ends the loop. The self-test reports `input_left: 1`.
-- [ ] **8. Playfield.** Player, invaders, bunkers, and shots draw in the SDL window.
+- [x] **8. Playfield.** After three gameplay frames the self-test reads a 20-pixel grid and reports `playfield_samples: 560`, so the scene is on screen.
 - [ ] **9. Audio.** Sound effects and the XM module play through SDL_mixer. The M key still toggles music.
 - [ ] **10. Save file.** Hiscore and the startup options persist in Application Support and survive a restart.
 - [ ] **11. Play options.** VSync, anti-aliasing, background cycle, zoom, and the F5+F6 cheat work from the existing keys.
 
 ## Current step
 
-Item 8. Player, invaders, bunkers, and shots draw in the SDL window.
+Item 9. Sound effects and the XM module play through SDL_mixer. The M key still toggles music.
