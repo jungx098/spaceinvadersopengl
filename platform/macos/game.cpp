@@ -64,6 +64,42 @@ static void set_key(SDL_Keycode key, BOOL down)
 static SDL_Window* g_sdl_window = 0;
 static SDL_GLContext g_sdl_context = 0;
 static __thread int g_gl_current = 0;
+static const int k_windowed_width = 640;
+static const int k_windowed_height = 480;
+
+static void apply_window_size(int width, int height)
+{
+	if (width < 1)
+		width = 1;
+	if (height < 1)
+		height = 1;
+	window.init.width = width;
+	window.init.height = height;
+}
+
+static void toggle_fullscreen(void)
+{
+	if (!g_sdl_window)
+		return;
+	Uint32 flags = SDL_GetWindowFlags(g_sdl_window);
+	if (flags & SDL_WINDOW_FULLSCREEN)
+	{
+		SDL_SetWindowFullscreen(g_sdl_window, 0);
+		SDL_SetWindowSize(g_sdl_window, k_windowed_width, k_windowed_height);
+		SDL_SetWindowPosition(g_sdl_window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+		window.init.isFullScreen = FALSE;
+		apply_window_size(k_windowed_width, k_windowed_height);
+		return;
+	}
+
+	SDL_SetWindowFullscreen(g_sdl_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	window.init.isFullScreen = TRUE;
+	int width = 0;
+	int height = 0;
+	SDL_GetWindowSize(g_sdl_window, &width, &height);
+	if (width > 0 && height > 0)
+		apply_window_size(width, height);
+}
 
 extern "C" BOOL wglMakeCurrent(HDC hdc, HGLRC rc)
 {
@@ -200,9 +236,21 @@ int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 			if (event.type == SDL_QUIT)
 				running = false;
 			else if (event.type == SDL_KEYDOWN)
+			{
+				if (event.key.keysym.sym == SDLK_F12 && !event.key.repeat && !selftest)
+					toggle_fullscreen();
 				set_key(event.key.keysym.sym, TRUE);
+			}
 			else if (event.type == SDL_KEYUP)
 				set_key(event.key.keysym.sym, FALSE);
+			else if (event.type == SDL_WINDOWEVENT &&
+				(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED ||
+				 event.window.event == SDL_WINDOWEVENT_RESIZED))
+			{
+				apply_window_size(event.window.data1, event.window.data2);
+				Uint32 flags = SDL_GetWindowFlags(g_sdl_window);
+				window.init.isFullScreen = (flags & SDL_WINDOW_FULLSCREEN) ? TRUE : FALSE;
+			}
 			else if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT && game_step == 4)
 			{
 				moving = true;
