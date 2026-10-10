@@ -36,7 +36,7 @@ target_link_libraries(spaceinvaders PRIVATE SDL2::SDL2 SDL2_mixer::SDL2_mixer
 	"-framework CoreFoundation"
 )
 
-# Checklist item 2: compile the game. These objects are not linked yet.
+# The game sources compile as C++98 and are linked into the executable.
 set(GAME_SOURCES
 	si_3DS.cpp
 	si_3DS_MemoryFile.cpp

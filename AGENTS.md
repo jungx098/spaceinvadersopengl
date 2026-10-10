@@ -17,7 +17,9 @@ Vendored link inputs in the repo root: `fmodvc.lib`, `glpng.lib`, and delay-load
 
 `Space Invaders.dsp` / `.dsw` are the VC6 projects. `Space Invaders.vcproj` is the intermediate upgrade. Change `Space Invaders.vcxproj` (and `.filters` when adding files) unless the task is specifically about an older project file.
 
-There is no CMake, Makefile, CI, or test suite. Do not add one unless asked. This tree does not build on macOS or Linux. When a Windows MSVC toolchain is available, build `Debug|Win32` and say what you ran. When it is not, state that the change is unverified.
+Windows still builds only from `Space Invaders.sln`. There is no Makefile or CI. Do not replace that solution.
+
+macOS builds from `CMakeLists.txt`. See `docs/macos-port.md`. Homebrew SDL2 and SDL2_mixer supply the window, input, and audio. The game draws with an OpenGL 2.1 compatibility context. `./build/spaceinvaders` is the game. F12 toggles fullscreen. `SPACEINVADERS_SELFTEST=1 ./build/spaceinvaders` runs until three gameplay frames, or 20 seconds, and prints the checks in that note. When a Windows MSVC toolchain is available, also build `Debug|Win32`. When it is not, say the Windows build is unverified.
 
 ## Where to change things
 
@@ -36,6 +38,7 @@ There is no CMake, Makefile, CI, or test suite. Do not add one unless asked. Thi
 | Extract embedded binaries at runtime | `si_Resources.cpp` |
 | Embedded assets and dialogs | `resource.rc`, `resource.h` |
 | Loose assets the resource script points at | `images\`, `sounds\`, `models\` |
+| macOS window, input, fullscreen, audio, saves | `platform/macos/`, `CMakeLists.txt`, `docs/macos-port.md` |
 
 `Update`, `Draw`, and `GameLogic` are large. Edit the existing function. Do not split these files unless asked.
 
