@@ -80,6 +80,18 @@ extern "C" HGLRC wglGetCurrentContext(void)
 	return g_gl_current ? (HGLRC)1 : 0;
 }
 
+static BOOL macos_swap_interval(int interval)
+{
+	return SDL_GL_SetSwapInterval(interval) == 0 ? TRUE : FALSE;
+}
+
+extern "C" PROC wglGetProcAddress(LPCSTR name)
+{
+	if (name && std::strcmp(name, "wglSwapIntervalEXT") == 0)
+		return (PROC)macos_swap_interval;
+	return 0;
+}
+
 extern "C" BOOL SwapBuffers(HDC hdc)
 {
 	(void)hdc;
@@ -117,6 +129,19 @@ int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 	g_sdl_window = sdl_window;
 	g_sdl_context = context;
 	g_gl_current = 1;
+	if (selftest)
+	{
+		GLint samples = 0;
+		typedef BOOL (*SwapIntervalFn)(int);
+		SwapIntervalFn swap_interval;
+		glGetIntegerv(GL_SAMPLES, &samples);
+		std::printf("aa_samples: %d\n", samples);
+		swap_interval = (SwapIntervalFn)wglGetProcAddress("wglSwapIntervalEXT");
+		if (swap_interval)
+			swap_interval(1);
+		std::printf("vsync: %d\n", SDL_GL_GetSwapInterval());
+		std::fflush(stdout);
+	}
 	prepare_window();
 
 	if (selftest)

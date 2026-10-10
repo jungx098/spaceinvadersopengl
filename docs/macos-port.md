@@ -36,8 +36,8 @@ cmake --build build
 - [x] **8. Playfield.** After three gameplay frames the self-test reads a 20-pixel grid and reports `playfield_samples: 560`, so the scene is on screen.
 - [x] **9. Audio.** SDL_mixer plays the XM module and the MP3 effects. The self-test prints `music_playing: 1` and `sample_loaded: 1`. The M key still calls `FMUSIC_StopSong` / `FMUSIC_PlaySong`.
 - [x] **10. Save file.** Registry reads and writes go to `~/Library/Application Support/SpaceInvaders-OpenGL/save.bin`. The self-test prints `save_roundtrip: 77` and leaves that file on disk.
-- [ ] **11. Play options.** VSync, anti-aliasing, background cycle, zoom, and the F5+F6 cheat work from the existing keys.
+- [x] **11. Play options.** The window asks for 4 multisample buffers (`aa_samples: 4`). `wglSwapIntervalEXT` calls `SDL_GL_SetSwapInterval` (`vsync: 1`). B, M, R, A, V, numpad zoom, and F5+F6 go through the same `Update` paths as on Windows.
 
 ## Current step
 
-Item 11. VSync, anti-aliasing, background cycle, zoom, and the F5+F6 cheat.
+The checklist is complete. `./build/spaceinvaders` is the macOS game. `SPACEINVADERS_SELFTEST=1 ./build/spaceinvaders` loads to gameplay and prints the checks above.

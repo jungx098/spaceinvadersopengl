@@ -108,5 +108,4 @@ long long _vsntprintf() { return 0; }
 long long wglCreateContext() { return 0; }
 long long wglDeleteContext() { return 0; }
 long long wglGetCurrentDC() { return 0; }
-long long wglGetProcAddress() { return 0; }
 long long wsprintf() { return 0; }
