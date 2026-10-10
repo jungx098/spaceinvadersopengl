@@ -12,8 +12,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew")
 find_package(SDL2 REQUIRED CONFIG)
 
-add_executable(spaceinvaders platform/macos/host.cpp)
+add_executable(spaceinvaders
+	platform/macos/host.cpp
+	platform/macos/stubs.c
+	platform/macos/stubs.cpp
+)
 target_compile_definitions(spaceinvaders PRIVATE GL_SILENCE_DEPRECATION)
+target_include_directories(spaceinvaders BEFORE PRIVATE ${CMAKE_SOURCE_DIR}/platform/macos/include)
 target_link_libraries(spaceinvaders PRIVATE SDL2::SDL2 "-framework OpenGL")
 
 # Checklist item 2: compile the game. These objects are not linked yet.
@@ -48,6 +53,8 @@ set_target_properties(spaceinvaders_game PROPERTIES
 	CXX_STANDARD_REQUIRED ON
 	CXX_EXTENSIONS ON
 )
+target_sources(spaceinvaders PRIVATE $<TARGET_OBJECTS:spaceinvaders_game>)
+
 target_compile_options(spaceinvaders_game PRIVATE
 	-Wno-unknown-pragmas
 	-Wno-nonportable-include-path

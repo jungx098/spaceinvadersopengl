@@ -8,9 +8,15 @@ typedef struct tagINITCOMMONCONTROLSEX {
 } INITCOMMONCONTROLSEX;
 
 #define ICC_BAR_CLASSES 0x00000004
+#ifdef __cplusplus
+extern "C" {
+#endif
 BOOL InitCommonControlsEx(const INITCOMMONCONTROLSEX*);
 BOOL InitCommonControls(void);
 BOOL InitCommonControlEx(const INITCOMMONCONTROLSEX*);
+#ifdef __cplusplus
+}
+#endif
 
 #define TOOLTIPS_CLASS "tooltips_class32"
 #define TTF_IDISHWND 0x0001

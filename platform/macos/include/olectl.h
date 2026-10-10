@@ -16,7 +16,7 @@ struct IPicture {
 		long xSrc, long ySrc, long cxSrc, long cySrc, const void* rect);
 };
 
-extern const GUID IID_IPicture;
+extern "C" const GUID IID_IPicture;
 
 HRESULT CreateStreamOnHGlobal(HGLOBAL global, BOOL delete_on_release, IStream** stream);
 HRESULT OleLoadPicture(IStream* stream, LONG size, BOOL runmode, const GUID& iid, void** object);

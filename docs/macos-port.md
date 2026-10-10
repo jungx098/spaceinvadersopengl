@@ -28,7 +28,7 @@ cmake --build build
 
 - [x] **1. Host window.** `platform/macos/host.cpp` opens a 640×480 window, creates an OpenGL 2.1 compatibility context, clears the frame, and exits on Escape or window close. The game sources are not linked yet. Verified with `SPACEINVADERS_SELFTEST=1`: `gl_version: 2.1 Metal - 90.5` on Apple M3.
 - [x] **2. Compile the game.** `platform/macos/include/` supplies Win32, GL, and CRT declarations. `spaceinvaders_game` compiles all 13 `si_*.cpp` / `si_Font.c` objects. They are not linked into the executable yet. Four `#include` paths changed from `\` to `/` because Clang does not treat `\` as a separator, and `fontDrawString` takes `const char*` so ternary string literals type-check.
-- [ ] **3. Link.** Stub the Win32 and FMOD calls the object files reference so `cmake --build build` produces a binary.
+- [x] **3. Link.** `platform/macos/stubs.c` defines the Win32 and FMOD symbols the objects reference. `platform/macos/stubs.cpp` defines the OLE picture methods. `cmake --build build` produces `build/spaceinvaders`, and the item 1 self-test still prints the GL version.
 - [ ] **4. Enter the game.** Skip the startup dialog. Use a windowed 640×480 window and call the existing init and frame loop (`game_step` 1 through 4). The process stays up.
 - [ ] **5. Disk assets.** Texture, sound, and model loads read files under `images/`, `sounds/`, and `models/` instead of `FindResource`.
 - [ ] **6. Loading screen.** The load thread runs, the progress display shows, and `game_step` reaches 4.
@@ -40,4 +40,4 @@ cmake --build build
 
 ## Current step
 
-Item 3. Stub the Win32 and FMOD calls the object files reference so `cmake --build build` links a binary. Do not start item 4 until that link succeeds.
+Item 4. Skip the startup dialog, open a windowed 640×480 window, and call `Initialize` plus the `game_step` loop. The process stays up.
