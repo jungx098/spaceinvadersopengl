@@ -19,7 +19,7 @@ Vendored link inputs in the repo root: `fmodvc.lib`, `glpng.lib`, and delay-load
 
 Windows still builds only from `Space Invaders.sln`. There is no Makefile or CI. Do not replace that solution.
 
-macOS builds from `CMakeLists.txt`. See `docs/macos-port.md`. Homebrew SDL2 and SDL2_mixer supply the window, input, and audio. The game draws with an OpenGL 2.1 compatibility context. `./build/spaceinvaders` is the game. F12 toggles fullscreen. `SPACEINVADERS_SELFTEST=1 ./build/spaceinvaders` runs until three gameplay frames, or 20 seconds, and prints the checks in that note. When a Windows MSVC toolchain is available, also build `Debug|Win32`. When it is not, say the Windows build is unverified.
+macOS builds from `CMakeLists.txt`. See `docs/macos-port.md`. Homebrew SDL2 and SDL2_mixer supply the window, input, and audio. The game draws with an OpenGL 2.1 compatibility context. `./build/spaceinvaders` is the game. F12 toggles fullscreen. `SPACEINVADERS_SELFTEST=1 ./build/spaceinvaders` runs until three gameplay frames, or 20 seconds. When a Windows MSVC toolchain is available, also build `Debug|Win32`. When it is not, say the Windows build is unverified.
 
 ## Where to change things
 
