@@ -29,7 +29,7 @@ cmake --build build
 - [x] **1. Host window.** `platform/macos/host.cpp` opens a 640×480 window, creates an OpenGL 2.1 compatibility context, clears the frame, and exits on Escape or window close. The game sources are not linked yet. Verified with `SPACEINVADERS_SELFTEST=1`: `gl_version: 2.1 Metal - 90.5` on Apple M3.
 - [x] **2. Compile the game.** `platform/macos/include/` supplies Win32, GL, and CRT declarations. `spaceinvaders_game` compiles all 13 `si_*.cpp` / `si_Font.c` objects. They are not linked into the executable yet. Four `#include` paths changed from `\` to `/` because Clang does not treat `\` as a separator, and `fontDrawString` takes `const char*` so ternary string literals type-check.
 - [x] **3. Link.** `platform/macos/stubs.c` defines the Win32 and FMOD symbols the objects reference. `platform/macos/stubs.cpp` defines the OLE picture methods. `cmake --build build` produces `build/spaceinvaders`, and the item 1 self-test still prints the GL version.
-- [ ] **4. Enter the game.** Skip the startup dialog. Use a windowed 640×480 window and call the existing init and frame loop (`game_step` 1 through 4). The process stays up.
+- [x] **4. Enter the game.** The startup dialog is skipped. `platform/macos/game.cpp` fills a windowed 640×480 `GL_Window` and runs `Initialize` plus the `game_step` switch. A normal launch stays up. `SPACEINVADERS_SELFTEST=1` runs eight frames and prints `game_step`.
 - [ ] **5. Disk assets.** Texture, sound, and model loads read files under `images/`, `sounds/`, and `models/` instead of `FindResource`.
 - [ ] **6. Loading screen.** The load thread runs, the progress display shows, and `game_step` reaches 4.
 - [ ] **7. Input.** Keyboard and mouse update `Keys::keyDown` and the existing camera drag. Arrows, Ctrl, and Esc do what `Readme.txt` says.
@@ -40,4 +40,4 @@ cmake --build build
 
 ## Current step
 
-Item 4. Skip the startup dialog, open a windowed 640×480 window, and call `Initialize` plus the `game_step` loop. The process stays up.
+Item 5. Texture, sound, and model loads read `images/`, `sounds/`, and `models/`.

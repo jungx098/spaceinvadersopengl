@@ -16,7 +16,6 @@ long long ClientToScreen() { return 0; }
 long long CloseHandle() { return 0; }
 long long CreateCompatibleDC() { return 0; }
 long long CreateDIBSection() { return 0; }
-long long CreateDirectory() { return 0; }
 long long CreateFile() { return 0; }
 long long CreateFont() { return 0; }
 long long CreateFontIndirect() { return 0; }
@@ -52,7 +51,6 @@ long long FSOUND_DSP_SetActive() { return 0; }
 long long FSOUND_GetCPUUsage() { return 0; }
 long long FSOUND_GetError() { return 0; }
 long long FSOUND_GetMixer() { return 0; }
-long long FSOUND_GetVersion() { return 0; }
 long long FSOUND_Init() { return 0; }
 long long FSOUND_IsPlaying() { return 0; }
 long long FSOUND_PlaySoundEx() { return 0; }
@@ -74,7 +72,6 @@ long long FormatMessage() { return 0; }
 long long FrameRect() { return 0; }
 long long FreeResource() { return 0; }
 long long GetCapture() { return 0; }
-long long GetCurrentDirectory() { return 0; }
 long long GetCursorPos() { return 0; }
 long long GetDC() { return 0; }
 long long GetDesktopWindow() { return 0; }
@@ -88,8 +85,6 @@ long long GetParent() { return 0; }
 long long GetProcAddress() { return 0; }
 long long GetProp() { return 0; }
 long long GetStockObject() { return 0; }
-long long GetSystemDirectory() { return 0; }
-long long GetTempPath() { return 0; }
 long long GetTickCount() { return 0; }
 long long GetWindowLong() { return 0; }
 long long GetWindowRect() { return 0; }

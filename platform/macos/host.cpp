@@ -7,6 +7,8 @@
 #include <cstdio>
 #include <cstdlib>
 
+int macos_game_main(SDL_Window* window, int selftest);
+
 static void fail(const char* what)
 {
 	std::fprintf(stderr, "%s: %s\n", what, SDL_GetError());
@@ -49,28 +51,10 @@ int main(int argc, char** argv)
 	std::fflush(stdout);
 
 	const bool selftest = std::getenv("SPACEINVADERS_SELFTEST") != nullptr;
-	bool running = true;
-	while (running)
-	{
-		SDL_Event event;
-		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_QUIT)
-				running = false;
-			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
-				running = false;
-		}
-
-		glClearColor(0.05f, 0.05f, 0.08f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-		SDL_GL_SwapWindow(window);
-
-		if (selftest)
-			break;
-	}
+	int code = macos_game_main(window, selftest ? 1 : 0);
 
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
-	return 0;
+	return code;
 }

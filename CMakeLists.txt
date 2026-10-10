@@ -14,11 +14,16 @@ find_package(SDL2 REQUIRED CONFIG)
 
 add_executable(spaceinvaders
 	platform/macos/host.cpp
+	platform/macos/game.cpp
+	platform/macos/runtime.c
 	platform/macos/stubs.c
 	platform/macos/stubs.cpp
 )
 target_compile_definitions(spaceinvaders PRIVATE GL_SILENCE_DEPRECATION)
-target_include_directories(spaceinvaders BEFORE PRIVATE ${CMAKE_SOURCE_DIR}/platform/macos/include)
+target_include_directories(spaceinvaders BEFORE PRIVATE
+	${CMAKE_SOURCE_DIR}/platform/macos/include
+	${CMAKE_SOURCE_DIR}
+)
 target_link_libraries(spaceinvaders PRIVATE SDL2::SDL2 "-framework OpenGL")
 
 # Checklist item 2: compile the game. These objects are not linked yet.
