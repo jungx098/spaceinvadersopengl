@@ -764,7 +764,7 @@ BOOL CALLBACK DialogAboutProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM 
 					{
 						// place l'icône "MUSIQUE ON" dans le bouton
 						HICON hU = (HICON)LoadImage(window.init.application->hInstance,	MAKEINTRESOURCE(IDB_BUTTON_PLAY), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
-						SendMessage(GetDlgItem(hwndDlg,IDC_BUTTON_MUTE), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM) (DWORD) hU );
+						SendMessage(GetDlgItem(hwndDlg,IDC_BUTTON_MUTE), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM) (DWORD)(uintptr_t)hU );
 
 						_beginthread( FmodFadingOut, 0, NULL );
 					}
@@ -772,7 +772,7 @@ BOOL CALLBACK DialogAboutProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM 
 					{
 						// place l'icône "MUSIQUE OFF" dans le bouton
 						HICON hU = (HICON)LoadImage(window.init.application->hInstance,	MAKEINTRESOURCE(IDB_BUTTON_MUTE), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
-						SendMessage(GetDlgItem(hwndDlg,IDC_BUTTON_MUTE), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM) (DWORD) hU );
+						SendMessage(GetDlgItem(hwndDlg,IDC_BUTTON_MUTE), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM) (DWORD)(uintptr_t)hU );
 
 						_beginthread( FmodFadingIn, 0, NULL );
 					}
@@ -950,13 +950,13 @@ BOOL CALLBACK DialogAboutProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM 
 			{
 				// place l'icône "MUSIQUE OFF"
 				HICON hU = (HICON)LoadImage(window.init.application->hInstance,	MAKEINTRESOURCE(IDB_BUTTON_MUTE), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
-				SendMessage(GetDlgItem(hwndDlg,IDC_BUTTON_MUTE), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM) (DWORD) hU );
+				SendMessage(GetDlgItem(hwndDlg,IDC_BUTTON_MUTE), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM) (DWORD)(uintptr_t)hU );
 			}
 			else
 			{
 				// place l'icône "MUSIQUE ON"
 				HICON hU = (HICON)LoadImage(window.init.application->hInstance,	MAKEINTRESOURCE(IDB_BUTTON_PLAY), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
-				SendMessage(GetDlgItem(hwndDlg,IDC_BUTTON_MUTE), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM) (DWORD) hU );
+				SendMessage(GetDlgItem(hwndDlg,IDC_BUTTON_MUTE), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM) (DWORD)(uintptr_t)hU );
 			}
 			first = false;
 

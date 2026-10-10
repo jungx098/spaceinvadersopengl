@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(spaceinvadersopengl LANGUAGES C CXX)
+project(spaceinvadersopengl LANGUAGES C CXX OBJCXX)
 
 # macOS port only. The Windows game still builds from Space Invaders.sln.
 if(NOT APPLE)
@@ -16,6 +16,8 @@ add_executable(spaceinvaders
 	platform/macos/host.cpp
 	platform/macos/game.cpp
 	platform/macos/runtime.c
+	platform/macos/resources.c
+	platform/macos/image.mm
 	platform/macos/stubs.c
 	platform/macos/stubs.cpp
 )
@@ -24,7 +26,12 @@ target_include_directories(spaceinvaders BEFORE PRIVATE
 	${CMAKE_SOURCE_DIR}/platform/macos/include
 	${CMAKE_SOURCE_DIR}
 )
-target_link_libraries(spaceinvaders PRIVATE SDL2::SDL2 "-framework OpenGL")
+target_link_libraries(spaceinvaders PRIVATE SDL2::SDL2
+	"-framework OpenGL"
+	"-framework ImageIO"
+	"-framework CoreGraphics"
+	"-framework CoreFoundation"
+)
 
 # Checklist item 2: compile the game. These objects are not linked yet.
 set(GAME_SOURCES

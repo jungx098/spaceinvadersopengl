@@ -1,7 +1,4 @@
 /* C link stubs. Signatures are intentionally empty; the symbol is what the linker needs. */
-typedef struct { unsigned int a; unsigned short b, c; unsigned char d[8]; } macos_guid;
-const macos_guid IID_IPicture = {0, 0, 0, {0}};
-unsigned long _beginthread(void (*fn)(void*), unsigned stack, void* arg) { (void)fn; (void)stack; (void)arg; return 0; }
 void _endthread(void) {}
 int InitCommonControlsEx(const void* p) { (void)p; return 1; }
 int InitCommonControls(void) { return 1; }
@@ -13,18 +10,11 @@ long long CheckDlgButton() { return 0; }
 long long CheckRadioButton() { return 0; }
 long long ChoosePixelFormat() { return 0; }
 long long ClientToScreen() { return 0; }
-long long CloseHandle() { return 0; }
-long long CreateCompatibleDC() { return 0; }
-long long CreateDIBSection() { return 0; }
-long long CreateFile() { return 0; }
 long long CreateFont() { return 0; }
 long long CreateFontIndirect() { return 0; }
 long long CreateSolidBrush() { return 0; }
 long long CreateWindowEx() { return 0; }
 long long DefWindowProc() { return 0; }
-long long DeleteDC() { return 0; }
-long long DeleteFile() { return 0; }
-long long DeleteObject() { return 0; }
 long long DescribePixelFormat() { return 0; }
 long long DestroyWindow() { return 0; }
 long long DialogBox() { return 0; }
@@ -64,23 +54,15 @@ long long FSOUND_Stream_Open() { return 0; }
 long long FSOUND_Stream_PlayEx() { return 0; }
 long long FSOUND_Stream_Stop() { return 0; }
 long long FillRect() { return 0; }
-long long FindClose() { return 0; }
-long long FindFirstFile() { return 0; }
-long long FindNextFile() { return 0; }
-long long FindResource() { return 0; }
 long long FormatMessage() { return 0; }
 long long FrameRect() { return 0; }
-long long FreeResource() { return 0; }
 long long GetCapture() { return 0; }
 long long GetCursorPos() { return 0; }
 long long GetDC() { return 0; }
 long long GetDesktopWindow() { return 0; }
-long long GetDeviceCaps() { return 0; }
 long long GetDlgItem() { return 0; }
 long long GetDlgItemText() { return 0; }
-long long GetLastError() { return 0; }
 long long GetModuleHandle() { return 0; }
-long long GetObject() { return 0; }
 long long GetParent() { return 0; }
 long long GetProcAddress() { return 0; }
 long long GetProp() { return 0; }
@@ -88,9 +70,6 @@ long long GetStockObject() { return 0; }
 long long GetTickCount() { return 0; }
 long long GetWindowLong() { return 0; }
 long long GetWindowRect() { return 0; }
-long long GlobalAlloc() { return 0; }
-long long GlobalLock() { return 0; }
-long long GlobalUnlock() { return 0; }
 long long HttpSendRequest() { return 0; }
 long long InternetAttemptConnect() { return 0; }
 long long InternetCloseHandle() { return 0; }
@@ -103,12 +82,8 @@ long long InvalidateRect() { return 0; }
 long long IsDlgButtonChecked() { return 0; }
 long long LoadCursor() { return 0; }
 long long LoadIcon() { return 0; }
-long long LoadImage() { return 0; }
-long long LoadResource() { return 0; }
 long long LocalFree() { return 0; }
-long long LockResource() { return 0; }
 long long MessageBox() { return 0; }
-long long MulDiv() { return 0; }
 long long MultiByteToWideChar() { return 0; }
 long long OutputDebugString() { return 0; }
 long long PeekMessage() { return 0; }
@@ -126,7 +101,6 @@ long long ReleaseCapture() { return 0; }
 long long ReleaseDC() { return 0; }
 long long RemoveDirectory() { return 0; }
 long long RemoveProp() { return 0; }
-long long SelectObject() { return 0; }
 long long SendDlgItemMessage() { return 0; }
 long long SendMessage() { return 0; }
 long long SetBkColor() { return 0; }
@@ -144,30 +118,15 @@ long long SetWindowText() { return 0; }
 long long ShellExecute() { return 0; }
 long long ShowCursor() { return 0; }
 long long ShowWindow() { return 0; }
-long long SizeofResource() { return 0; }
 long long Sleep() { return 0; }
-long long SwapBuffers() { return 0; }
 long long TextOut() { return 0; }
-long long UnlockResource() { return 0; }
 long long UnregisterClass() { return 0; }
 long long WaitMessage() { return 0; }
-long long WriteFile() { return 0; }
 long long _TrackMouseEvent() { return 0; }
-long long _itoa() { return 0; }
-long long _ltoa() { return 0; }
 long long _splitpath() { return 0; }
-long long _strdup() { return 0; }
-long long _stricmp() { return 0; }
-long long _strlwr() { return 0; }
-long long _strupr() { return 0; }
 long long _vsntprintf() { return 0; }
-long long pngBind() { return 0; }
-long long pngBindF() { return 0; }
-long long timeGetTime() { return 0; }
 long long wglCreateContext() { return 0; }
 long long wglDeleteContext() { return 0; }
-long long wglGetCurrentContext() { return 0; }
 long long wglGetCurrentDC() { return 0; }
 long long wglGetProcAddress() { return 0; }
-long long wglMakeCurrent() { return 0; }
 long long wsprintf() { return 0; }

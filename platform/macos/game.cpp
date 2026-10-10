@@ -1,6 +1,8 @@
 /* Drives the existing game loop on the SDL OpenGL window. */
 #include "si_Main.h"
 #include "si_Loading.h"
+#include "si_Textures.h"
+#include "macos_port.h"
 
 #include <SDL.h>
 
@@ -13,6 +15,36 @@ extern unsigned long h_thread2;
 
 static Application g_application;
 static Keys g_keys;
+static SDL_Window* g_sdl_window = 0;
+static SDL_GLContext g_sdl_context = 0;
+static __thread int g_gl_current = 0;
+
+extern "C" BOOL wglMakeCurrent(HDC hdc, HGLRC rc)
+{
+	if (!g_sdl_window)
+		return FALSE;
+	if (!hdc || !rc)
+	{
+		g_gl_current = 0;
+		return SDL_GL_MakeCurrent(g_sdl_window, NULL) == 0 ? TRUE : FALSE;
+	}
+	g_gl_current = SDL_GL_MakeCurrent(g_sdl_window, g_sdl_context) == 0;
+	return g_gl_current ? TRUE : FALSE;
+}
+
+extern "C" HGLRC wglGetCurrentContext(void)
+{
+	return g_gl_current ? (HGLRC)1 : 0;
+}
+
+extern "C" BOOL SwapBuffers(HDC hdc)
+{
+	(void)hdc;
+	if (!g_sdl_window)
+		return FALSE;
+	SDL_GL_SwapWindow(g_sdl_window);
+	return TRUE;
+}
 
 static void prepare_window(void)
 {
@@ -37,9 +69,20 @@ static void prepare_window(void)
 	window.isVisible = TRUE;
 }
 
-int macos_game_main(SDL_Window* sdl_window, int selftest)
+int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 {
+	g_sdl_window = sdl_window;
+	g_sdl_context = context;
+	g_gl_current = 1;
 	prepare_window();
+
+	if (selftest)
+	{
+		std::printf("asset_ship_bmp: %u\n", macos_asset_bytes(IDB_01, "BITMAP"));
+		std::printf("asset_player_3ds: %u\n", macos_asset_bytes(IDR_BINARY_PLAYER_3DS, "BINARY"));
+		std::printf("asset_xm: %u\n", macos_asset_bytes(IDR_SOUND_XM, "WAVE"));
+		std::fflush(stdout);
+	}
 
 	if (Initialize(&window, &g_keys) == FALSE)
 	{
@@ -47,8 +90,26 @@ int macos_game_main(SDL_Window* sdl_window, int selftest)
 		return 1;
 	}
 
+	if (selftest)
+	{
+		BOOL ship = LoadTexture(NULL, IDB_01, 1);
+		BOOL tga = LoadTexture(NULL, IDT_00, 2);
+		BOOL jpg = LoadTexture(NULL, IDJ_09, 3);
+		BOOL png = LoadTexture(NULL, IDP_35, 4);
+		std::printf("load_texture_ship: %d\n", ship ? 1 : 0);
+		std::printf("load_texture_tga: %d\n", tga ? 1 : 0);
+		std::printf("load_texture_jpg: %d\n", jpg ? 1 : 0);
+		std::printf("load_texture_png: %d\n", png ? 1 : 0);
+		SDL_GL_SwapWindow(sdl_window);
+		std::printf("swap_after_load: 1\n");
+		std::fflush(stdout);
+	}
+
+	Fps_Init();
+
 	int frames = 0;
 	bool running = true;
+	Uint32 started = SDL_GetTicks();
 	while (running)
 	{
 		SDL_Event event;
@@ -91,9 +152,10 @@ int macos_game_main(SDL_Window* sdl_window, int selftest)
 			break;
 		}
 
-		SDL_GL_SwapWindow(sdl_window);
+		if (game_step != 2)
+			SDL_GL_SwapWindow(sdl_window);
 		frames++;
-		if (selftest && frames >= 8)
+		if (selftest && (game_step >= 4 || SDL_GetTicks() - started > 20000))
 			break;
 	}
 

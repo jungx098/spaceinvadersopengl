@@ -2,6 +2,8 @@
 #include "windows.h"
 
 #include <errno.h>
+#include <time.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,17 +50,246 @@ DWORD GetCurrentDirectory(DWORD nBufferLength, LPSTR lpBuffer)
 	return (DWORD)strlen(lpBuffer);
 }
 
-BOOL CreateDirectory(LPCSTR lpPathName, void* unused)
+float FSOUND_GetVersion(void)
 {
-	(void)unused;
-	if (!lpPathName)
+	return 3.75f;
+}
+
+char* _itoa(int value, char* str, int radix)
+{
+	(void)radix;
+	if (!str)
+		return 0;
+	sprintf(str, "%d", value);
+	return str;
+}
+
+char* _ltoa(long value, char* str, int radix)
+{
+	(void)radix;
+	if (!str)
+		return 0;
+	sprintf(str, "%ld", value);
+	return str;
+}
+
+char* _strdup(const char* text)
+{
+	size_t n;
+	char* copy;
+	if (!text)
+		return 0;
+	n = strlen(text);
+	copy = (char*)malloc(n + 1);
+	if (!copy)
+		return 0;
+	memcpy(copy, text, n + 1);
+	return copy;
+}
+
+char* _strlwr(char* text)
+{
+	char* cursor;
+	if (!text)
+		return 0;
+	for (cursor = text; *cursor; cursor++)
+	{
+		if (*cursor >= 'A' && *cursor <= 'Z')
+			*cursor = (char)(*cursor - 'A' + 'a');
+	}
+	return text;
+}
+
+char* _strupr(char* text)
+{
+	char* cursor;
+	if (!text)
+		return 0;
+	for (cursor = text; *cursor; cursor++)
+	{
+		if (*cursor >= 'a' && *cursor <= 'z')
+			*cursor = (char)(*cursor - 'a' + 'A');
+	}
+	return text;
+}
+
+int _stricmp(const char* left, const char* right)
+{
+	if (!left || !right)
+		return left ? 1 : (right ? -1 : 0);
+	return strcasecmp(left, right);
+}
+
+static void normalize_path(char* path)
+{
+	char* cursor;
+	if (!path)
+		return;
+	for (cursor = path; *cursor; cursor++)
+	{
+		if (*cursor == '\\')
+			*cursor = '/';
+	}
+}
+
+#define MAC_FILE_MAGIC 0x4d414304u
+
+typedef struct MacFile {
+	unsigned magic;
+	FILE* file;
+} MacFile;
+
+HANDLE CreateFile(LPCSTR name, DWORD access, DWORD share, void* security, DWORD disposition, DWORD flags, HANDLE template_file)
+{
+	MacFile* handle;
+	char path[MAX_PATH * 2];
+	(void)access;
+	(void)share;
+	(void)security;
+	(void)disposition;
+	(void)flags;
+	(void)template_file;
+	if (!name)
+		return INVALID_HANDLE_VALUE;
+	snprintf(path, sizeof path, "%s", name);
+	normalize_path(path);
+	handle = (MacFile*)calloc(1, sizeof(MacFile));
+	if (!handle)
+		return INVALID_HANDLE_VALUE;
+	handle->magic = MAC_FILE_MAGIC;
+	handle->file = fopen(path, "wb+");
+	if (!handle->file)
+	{
+		free(handle);
+		return INVALID_HANDLE_VALUE;
+	}
+	return (HANDLE)handle;
+}
+
+BOOL WriteFile(HANDLE file, LPCVOID buffer, DWORD bytes, DWORD* written, void* overlapped)
+{
+	MacFile* handle = (MacFile*)file;
+	size_t count;
+	(void)overlapped;
+	if (written)
+		*written = 0;
+	if (!handle || handle->magic != MAC_FILE_MAGIC || !handle->file || !buffer)
 		return FALSE;
-	if (mkdir(lpPathName, 0755) == 0 || errno == EEXIST)
+	count = fwrite(buffer, 1, bytes, handle->file);
+	if (written)
+		*written = (DWORD)count;
+	return count == bytes;
+}
+
+BOOL CloseHandle(HANDLE object)
+{
+	MacFile* handle = (MacFile*)object;
+	if (!handle || handle->magic != MAC_FILE_MAGIC)
+		return TRUE;
+	if (handle->file)
+		fclose(handle->file);
+	free(handle);
+	return TRUE;
+}
+
+BOOL DeleteFile(LPCSTR name)
+{
+	char path[MAX_PATH * 2];
+	if (!name)
+		return FALSE;
+	snprintf(path, sizeof path, "%s", name);
+	normalize_path(path);
+	return unlink(path) == 0;
+}
+
+BOOL CreateDirectory(LPCSTR path, void* security)
+{
+	char normalized[MAX_PATH * 2];
+	(void)security;
+	if (!path)
+		return FALSE;
+	snprintf(normalized, sizeof normalized, "%s", path);
+	normalize_path(normalized);
+	if (mkdir(normalized, 0755) == 0 || errno == EEXIST)
 		return TRUE;
 	return FALSE;
 }
 
-float FSOUND_GetVersion(void)
+HANDLE FindFirstFile(LPCSTR path, WIN32_FIND_DATA* data)
 {
-	return 3.75f;
+	if (data)
+		data->cFileName[0] = 0;
+	/* Pretend the bundled fmod.dll is already current so startup does not try to write it. */
+	if (path && strstr(path, "fmod.dll"))
+		return (HANDLE)(intptr_t)1;
+	return INVALID_HANDLE_VALUE;
+}
+
+BOOL FindNextFile(HANDLE find, WIN32_FIND_DATA* data)
+{
+	(void)find;
+	if (data)
+		data->cFileName[0] = 0;
+	return FALSE;
+}
+
+BOOL FindClose(HANDLE find)
+{
+	(void)find;
+	return TRUE;
+}
+
+DWORD timeGetTime(void)
+{
+	static int started = 0;
+	static struct timespec origin;
+	struct timespec now;
+	if (!started)
+	{
+		clock_gettime(CLOCK_MONOTONIC, &origin);
+		started = 1;
+	}
+	clock_gettime(CLOCK_MONOTONIC, &now);
+	return (DWORD)((now.tv_sec - origin.tv_sec) * 1000 + (now.tv_nsec - origin.tv_nsec) / 1000000);
+}
+
+DWORD GetLastError(void)
+{
+	return ERROR_NO_MORE_FILES;
+}
+
+typedef struct ThreadStart {
+	void (*fn)(void*);
+	void* arg;
+} ThreadStart;
+
+static void* thread_main(void* raw)
+{
+	ThreadStart* start = (ThreadStart*)raw;
+	void (*fn)(void*) = start->fn;
+	void* arg = start->arg;
+	free(start);
+	fn(arg);
+	return 0;
+}
+
+unsigned long _beginthread(void (*fn)(void*), unsigned stack, void* arg)
+{
+	pthread_t thread;
+	ThreadStart* start;
+	(void)stack;
+	if (!fn)
+		return 0;
+	start = (ThreadStart*)malloc(sizeof(ThreadStart));
+	if (!start)
+		return 0;
+	start->fn = fn;
+	start->arg = arg;
+	if (pthread_create(&thread, 0, thread_main, start) != 0)
+	{
+		free(start);
+		return 0;
+	}
+	pthread_detach(thread);
+	return 1;
 }

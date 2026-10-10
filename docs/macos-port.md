@@ -30,7 +30,7 @@ cmake --build build
 - [x] **2. Compile the game.** `platform/macos/include/` supplies Win32, GL, and CRT declarations. `spaceinvaders_game` compiles all 13 `si_*.cpp` / `si_Font.c` objects. They are not linked into the executable yet. Four `#include` paths changed from `\` to `/` because Clang does not treat `\` as a separator, and `fontDrawString` takes `const char*` so ternary string literals type-check.
 - [x] **3. Link.** `platform/macos/stubs.c` defines the Win32 and FMOD symbols the objects reference. `platform/macos/stubs.cpp` defines the OLE picture methods. `cmake --build build` produces `build/spaceinvaders`, and the item 1 self-test still prints the GL version.
 - [x] **4. Enter the game.** The startup dialog is skipped. `platform/macos/game.cpp` fills a windowed 640×480 `GL_Window` and runs `Initialize` plus the `game_step` switch. A normal launch stays up. `SPACEINVADERS_SELFTEST=1` runs eight frames and prints `game_step`.
-- [ ] **5. Disk assets.** Texture, sound, and model loads read files under `images/`, `sounds/`, and `models/` instead of `FindResource`.
+- [x] **5. Disk assets.** `FindResource` reads `images/`, `sounds/`, and `models/` using the paths in `resource.rc`. BMP, TGA, JPG, and PNG loads succeed. `DWORD` stays 32-bit so the texture pixel loops match the Windows layout.
 - [ ] **6. Loading screen.** The load thread runs, the progress display shows, and `game_step` reaches 4.
 - [ ] **7. Input.** Keyboard and mouse update `Keys::keyDown` and the existing camera drag. Arrows, Ctrl, and Esc do what `Readme.txt` says.
 - [ ] **8. Playfield.** Player, invaders, bunkers, and shots draw in the SDL window.
@@ -40,4 +40,4 @@ cmake --build build
 
 ## Current step
 
-Item 5. Texture, sound, and model loads read `images/`, `sounds/`, and `models/`.
+Item 6. The load thread runs, the progress display swaps, and `game_step` reaches 4.

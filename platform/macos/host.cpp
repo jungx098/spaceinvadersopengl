@@ -7,7 +7,7 @@
 #include <cstdio>
 #include <cstdlib>
 
-int macos_game_main(SDL_Window* window, int selftest);
+int macos_game_main(SDL_Window* window, SDL_GLContext context, int selftest);
 
 static void fail(const char* what)
 {
@@ -51,7 +51,7 @@ int main(int argc, char** argv)
 	std::fflush(stdout);
 
 	const bool selftest = std::getenv("SPACEINVADERS_SELFTEST") != nullptr;
-	int code = macos_game_main(window, selftest ? 1 : 0);
+	int code = macos_game_main(window, context, selftest ? 1 : 0);
 
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
