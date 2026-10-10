@@ -2,6 +2,7 @@
 #include "si_Main.h"
 #include "si_Loading.h"
 #include "si_Textures.h"
+#include "si_3DS.h"
 #include "macos_port.h"
 
 #include <SDL.h>
@@ -17,6 +18,8 @@ static Application g_application;
 static Keys g_keys;
 extern bool moving;
 extern double startx, starty, angle_x, angle_y;
+extern Model_3DS m;
+extern Model_3DS m1;
 
 static int vk_from_sdl(SDL_Keycode key)
 {
@@ -268,6 +271,30 @@ int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 				}
 			}
 			std::printf("playfield_samples: %d\n", lit);
+			std::printf("model_player: %d\n", m.numObjects);
+			std::printf("model_ships: %d\n", m1.numObjects);
+			{
+				float* spec = FSOUND_DSP_GetSpectrum();
+				int band;
+				std::printf("equalizer:");
+				for (band = 0; band < 8; band++)
+					std::printf(" %.2f", spec ? spec[band * 20] / 0.2f : 0.0f);
+				std::printf("\n");
+			}
+			{
+				float* spec = FSOUND_DSP_GetSpectrum();
+				float peak = 0.0f;
+				int bin;
+				if (spec)
+				{
+					for (bin = 0; bin < 160; bin++)
+					{
+						if (spec[bin] > peak)
+							peak = spec[bin];
+					}
+				}
+				std::printf("spectrum_peak: %f\n", peak);
+			}
 			break;
 		}
 		if (selftest && SDL_GetTicks() - started > 20000)

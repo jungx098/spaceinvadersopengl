@@ -922,8 +922,25 @@ unsigned char *fontGetGray (FILE *s, int size)
 		free (grayData);
 		return 0;
 	}
-	
-	texFormat = GL_ALPHA;
+
+	{
+		unsigned char *expanded = malloc (size * 2);
+		int i;
+		if (expanded == NULL)
+		{
+			free (grayData);
+			return 0;
+		}
+		for (i = 0; i < size; i++)
+		{
+			expanded[i * 2] = grayData[i];
+			expanded[i * 2 + 1] = grayData[i];
+		}
+		free (grayData);
+		grayData = expanded;
+	}
+
+	texFormat = GL_LUMINANCE_ALPHA;
 
 	return grayData;
 }

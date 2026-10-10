@@ -27,8 +27,6 @@ long long FSOUND_DSP_Create() { return 0; }
 long long FSOUND_DSP_GetActive() { return 0; }
 long long FSOUND_DSP_GetBufferLength() { return 0; }
 long long FSOUND_DSP_GetBufferLengthTotal() { return 0; }
-long long FSOUND_DSP_GetFFTUnit() { return 0; }
-long long FSOUND_DSP_GetSpectrum() { return 0; }
 long long FSOUND_DSP_SetActive() { return 0; }
 long long FSOUND_GetError() { return 0; }
 long long FSOUND_GetMixer() { return 0; }
@@ -52,7 +50,6 @@ long long GetParent() { return 0; }
 long long GetProcAddress() { return 0; }
 long long GetProp() { return 0; }
 long long GetStockObject() { return 0; }
-long long GetTickCount() { return 0; }
 long long GetWindowLong() { return 0; }
 long long GetWindowRect() { return 0; }
 long long HttpSendRequest() { return 0; }
@@ -74,8 +71,6 @@ long long OutputDebugString() { return 0; }
 long long PeekMessage() { return 0; }
 long long PostMessage() { return 0; }
 long long PtInRect() { return 0; }
-long long QueryPerformanceCounter() { return 0; }
-long long QueryPerformanceFrequency() { return 0; }
 long long RegisterClassEx() { return 0; }
 long long ReleaseCapture() { return 0; }
 long long ReleaseDC() { return 0; }
@@ -103,8 +98,6 @@ long long TextOut() { return 0; }
 long long UnregisterClass() { return 0; }
 long long WaitMessage() { return 0; }
 long long _TrackMouseEvent() { return 0; }
-long long _splitpath() { return 0; }
-long long _vsntprintf() { return 0; }
 long long wglCreateContext() { return 0; }
 long long wglDeleteContext() { return 0; }
 long long wglGetCurrentDC() { return 0; }

@@ -137,6 +137,7 @@ static void normalize_path(char* path)
 typedef struct MacFile {
 	unsigned magic;
 	FILE* file;
+	FILE* alias;
 } MacFile;
 
 HANDLE CreateFile(LPCSTR name, DWORD access, DWORD share, void* security, DWORD disposition, DWORD flags, HANDLE template_file)
@@ -163,6 +164,10 @@ HANDLE CreateFile(LPCSTR name, DWORD access, DWORD share, void* security, DWORD 
 		free(handle);
 		return INVALID_HANDLE_VALUE;
 	}
+	/* The game later fopen()s the same string, and backslash is not a
+	   directory separator here. Keep a second file at that exact name. */
+	if (strcmp(name, path) != 0)
+		handle->alias = fopen(name, "wb+");
 	return (HANDLE)handle;
 }
 
@@ -176,6 +181,8 @@ BOOL WriteFile(HANDLE file, LPCVOID buffer, DWORD bytes, DWORD* written, void* o
 	if (!handle || handle->magic != MAC_FILE_MAGIC || !handle->file || !buffer)
 		return FALSE;
 	count = fwrite(buffer, 1, bytes, handle->file);
+	if (handle->alias)
+		fwrite(buffer, 1, bytes, handle->alias);
 	if (written)
 		*written = (DWORD)count;
 	return count == bytes;
@@ -188,6 +195,8 @@ BOOL CloseHandle(HANDLE object)
 		return TRUE;
 	if (handle->file)
 		fclose(handle->file);
+	if (handle->alias)
+		fclose(handle->alias);
 	free(handle);
 	return TRUE;
 }
@@ -199,7 +208,16 @@ BOOL DeleteFile(LPCSTR name)
 		return FALSE;
 	snprintf(path, sizeof path, "%s", name);
 	normalize_path(path);
+	if (strcmp(name, path) != 0)
+		unlink(name);
 	return unlink(path) == 0;
+}
+
+int _vsntprintf(char* buffer, size_t count, const char* format, va_list args)
+{
+	if (!buffer || count == 0 || !format)
+		return 0;
+	return vsnprintf(buffer, count, format, args);
 }
 
 BOOL CreateDirectory(LPCSTR path, void* security)
@@ -251,6 +269,80 @@ DWORD timeGetTime(void)
 	}
 	clock_gettime(CLOCK_MONOTONIC, &now);
 	return (DWORD)((now.tv_sec - origin.tv_sec) * 1000 + (now.tv_nsec - origin.tv_nsec) / 1000000);
+}
+
+DWORD GetTickCount(void)
+{
+	return timeGetTime();
+}
+
+BOOL QueryPerformanceFrequency(LARGE_INTEGER* frequency)
+{
+	if (!frequency)
+		return FALSE;
+	frequency->QuadPart = 1000000000LL;
+	return TRUE;
+}
+
+BOOL QueryPerformanceCounter(LARGE_INTEGER* counter)
+{
+	struct timespec now;
+	if (!counter)
+		return FALSE;
+	clock_gettime(CLOCK_MONOTONIC, &now);
+	counter->QuadPart = (long long)now.tv_sec * 1000000000LL + now.tv_nsec;
+	return TRUE;
+}
+
+void _splitpath(const char* path, char* drive, char* dir, char* fname, char* ext)
+{
+	const char* slash = 0;
+	const char* dot = 0;
+	const char* cursor;
+	const char* file;
+	if (drive)
+		drive[0] = 0;
+	if (!path)
+		path = "";
+	for (cursor = path; *cursor; cursor++)
+	{
+		if (*cursor == '/' || *cursor == '\\')
+			slash = cursor;
+		else if (*cursor == '.')
+			dot = cursor;
+	}
+	if (dot && slash && dot < slash)
+		dot = 0;
+	file = slash ? slash + 1 : path;
+	if (dir)
+	{
+		if (slash)
+		{
+			size_t n = (size_t)(slash - path) + 1;
+			if (n > 255)
+				n = 255;
+			memcpy(dir, path, n);
+			dir[n] = 0;
+		}
+		else
+			dir[0] = 0;
+	}
+	if (fname)
+	{
+		const char* end = dot ? dot : cursor;
+		size_t n = (size_t)(end - file);
+		if (n > 255)
+			n = 255;
+		memcpy(fname, file, n);
+		fname[n] = 0;
+	}
+	if (ext)
+	{
+		if (dot)
+			snprintf(ext, 256, "%s", dot);
+		else
+			ext[0] = 0;
+	}
 }
 
 DWORD GetLastError(void)
