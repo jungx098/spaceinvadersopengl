@@ -169,7 +169,8 @@ extern "C" unsigned int pngBindF(FILE* file, int mipmap, int trans, pngInfo* inf
 	unsigned char* pixels = 0;
 	int w = 0;
 	int h = 0;
-	/* pngBind consumers sample the buffer as RGBA. Keep the context's bottom-up order. */
+	/* Keep the bitmap's bottom-up rows. These quads put texture v=0 at the top,
+	   which then lines the equalizer art up under the help text. */
 	int ok = macos_decode_memory(filebytes, (unsigned)length, 4, 1, &pixels, &w, &h);
 	free(filebytes);
 	if (!ok)

@@ -37,7 +37,7 @@ long IPicture::get_Height(long* out)
 }
 
 long IPicture::Render(HDC hdc, long x, long y, long cx, long cy,
-	long, long, long, long, const void*)
+	long, long, long, long cySrc, const void*)
 {
 	(void)x;
 	(void)y;
@@ -51,11 +51,16 @@ long IPicture::Render(HDC hdc, long x, long y, long cx, long cy,
 	if (dest_h <= 0)
 		dest_h = (int)cy;
 
+	/* The game passes a negative source height, which flips the picture into
+	   the bottom-up DIB. OpenGL then treats the first row as the bottom. */
+	bool flip = cySrc < 0;
 	for (int row = 0; row < dest_h; row++)
 	{
 		int src_y = (int)((long)row * height / dest_h);
 		if (src_y >= height)
 			src_y = height - 1;
+		if (flip)
+			src_y = height - 1 - src_y;
 		for (int col = 0; col < dest_w; col++)
 		{
 			int src_x = (int)((long)col * width / dest_w);
