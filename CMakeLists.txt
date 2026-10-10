@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 list(PREPEND CMAKE_PREFIX_PATH "/opt/homebrew")
 find_package(SDL2 REQUIRED CONFIG)
+find_package(SDL2_mixer REQUIRED CONFIG)
 
 add_executable(spaceinvaders
 	platform/macos/host.cpp
@@ -18,6 +19,7 @@ add_executable(spaceinvaders
 	platform/macos/runtime.c
 	platform/macos/resources.c
 	platform/macos/image.mm
+	platform/macos/audio.c
 	platform/macos/stubs.c
 	platform/macos/stubs.cpp
 )
@@ -26,7 +28,7 @@ target_include_directories(spaceinvaders BEFORE PRIVATE
 	${CMAKE_SOURCE_DIR}/platform/macos/include
 	${CMAKE_SOURCE_DIR}
 )
-target_link_libraries(spaceinvaders PRIVATE SDL2::SDL2
+target_link_libraries(spaceinvaders PRIVATE SDL2::SDL2 SDL2_mixer::SDL2_mixer
 	"-framework OpenGL"
 	"-framework ImageIO"
 	"-framework CoreGraphics"
