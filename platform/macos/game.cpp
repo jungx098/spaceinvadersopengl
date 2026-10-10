@@ -251,6 +251,24 @@ int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 
 	std::printf("game_step: %d\n", game_step);
 	std::printf("input_left: %d\n", g_keys.keyDown[VK_LEFT] ? 1 : 0);
+	if (selftest)
+	{
+		HKEY key = 0;
+		DWORD disposition = 0;
+		DWORD stored = 77;
+		DWORD loaded = 0;
+		DWORD type = 0;
+		DWORD size = sizeof loaded;
+		RegCreateKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\SpaceInvaders-OpenGL\\", 0, (LPSTR)"", 0, 0, 0, &key, &disposition);
+		RegSetValueEx(key, "port_selftest", 0, REG_DWORD, (const BYTE*)&stored, sizeof stored);
+		RegCloseKey(key);
+		key = 0;
+		loaded = 0;
+		RegOpenKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\SpaceInvaders-OpenGL\\", 0, KEY_READ, &key);
+		RegQueryValueEx(key, "port_selftest", 0, &type, (LPBYTE)&loaded, &size);
+		RegCloseKey(key);
+		std::printf("save_roundtrip: %u\n", loaded);
+	}
 	std::fflush(stdout);
 	Deinitialize();
 	return 0;

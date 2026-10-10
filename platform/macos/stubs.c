@@ -76,11 +76,6 @@ long long PostMessage() { return 0; }
 long long PtInRect() { return 0; }
 long long QueryPerformanceCounter() { return 0; }
 long long QueryPerformanceFrequency() { return 0; }
-long long RegCloseKey() { return 0; }
-long long RegCreateKeyEx() { return 0; }
-long long RegOpenKeyEx() { return 0; }
-long long RegQueryValueEx() { return 0; }
-long long RegSetValueEx() { return 0; }
 long long RegisterClassEx() { return 0; }
 long long ReleaseCapture() { return 0; }
 long long ReleaseDC() { return 0; }

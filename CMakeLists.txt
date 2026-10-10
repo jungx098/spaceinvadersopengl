@@ -20,6 +20,7 @@ add_executable(spaceinvaders
 	platform/macos/resources.c
 	platform/macos/image.mm
 	platform/macos/audio.c
+	platform/macos/save.c
 	platform/macos/stubs.c
 	platform/macos/stubs.cpp
 )

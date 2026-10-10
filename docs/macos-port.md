@@ -35,9 +35,9 @@ cmake --build build
 - [x] **7. Input.** SDL key events fill `Keys::keyDown` with the game's virtual-key codes. Left mouse drag updates `angle_x` and `angle_y`. Escape ends the loop. The self-test reports `input_left: 1`.
 - [x] **8. Playfield.** After three gameplay frames the self-test reads a 20-pixel grid and reports `playfield_samples: 560`, so the scene is on screen.
 - [x] **9. Audio.** SDL_mixer plays the XM module and the MP3 effects. The self-test prints `music_playing: 1` and `sample_loaded: 1`. The M key still calls `FMUSIC_StopSong` / `FMUSIC_PlaySong`.
-- [ ] **10. Save file.** Hiscore and the startup options persist in Application Support and survive a restart.
+- [x] **10. Save file.** Registry reads and writes go to `~/Library/Application Support/SpaceInvaders-OpenGL/save.bin`. The self-test prints `save_roundtrip: 77` and leaves that file on disk.
 - [ ] **11. Play options.** VSync, anti-aliasing, background cycle, zoom, and the F5+F6 cheat work from the existing keys.
 
 ## Current step
 
-Item 10. Hiscore and startup options persist in Application Support.
+Item 11. VSync, anti-aliasing, background cycle, zoom, and the F5+F6 cheat.
