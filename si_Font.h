@@ -78,7 +78,7 @@ fontDrawString
 Draws a string at (xpos, ypos) in the applications window.
 =============
 */
-void fontDrawString (int xpos, int ypos, char *s, ...);
+void fontDrawString (int xpos, int ypos, const char *s, ...);
 /*
 =============
 fontRegion

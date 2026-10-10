@@ -98,8 +98,8 @@ ________________________________________________________________________________
 #include <stdio.h>						// Header File For Input/Outout
 #include <stdlib.h>						// Header File For Standard Library
 #include <string.h>						// Header File For The String Library
-#include <gl\gl.h>						// Header File For The OpenGL32 Library
-#include <gl\glu.h>						// Header File For The GLu32 Library
+#include <gl/gl.h>						// Header File For The OpenGL32 Library
+#include <gl/glu.h>						// Header File For The GLu32 Library
 #include "si_Main.h"					// Header File For game
 #include "si_3DS.h"						// Header File For Game
 

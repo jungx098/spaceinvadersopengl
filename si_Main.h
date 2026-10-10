@@ -15,7 +15,7 @@
 //#include <gl\glaux.h>					// Header File For Some OpenGL Functions
 #include <math.h>						// Header File For sin(), cos(), _hypot()
 #include <process.h>					// Header File For _beginthread, _endthread 
-#include <gl\glut.h>
+#include <gl/glut.h>
 #include "resource.h"					// Header File For Game Resources
 #include "si_Basecode.h"				// Header File For Game
 #include "si_Fmod.h"					// Header File For FMOD (sounds & music)

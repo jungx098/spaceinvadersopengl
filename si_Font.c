@@ -411,7 +411,7 @@ fontDrawString
 Renders a string at xpos, ypos.
 =============
 */
-void fontDrawString (int xpos, int ypos, char *s, ...)
+void fontDrawString (int xpos, int ypos, const char *s, ...)
 {
 	va_list	msg;
     char buffer[FONT_MAX_LEN] = {'\0'};
