@@ -15,6 +15,49 @@ extern unsigned long h_thread2;
 
 static Application g_application;
 static Keys g_keys;
+extern bool moving;
+extern double startx, starty, angle_x, angle_y;
+
+static int vk_from_sdl(SDL_Keycode key)
+{
+	switch (key)
+	{
+	case SDLK_LEFT: return VK_LEFT;
+	case SDLK_RIGHT: return VK_RIGHT;
+	case SDLK_UP: return VK_UP;
+	case SDLK_ESCAPE: return VK_ESCAPE;
+	case SDLK_LCTRL:
+	case SDLK_RCTRL: return VK_CONTROL;
+	case SDLK_SPACE: return VK_SPACE;
+	case SDLK_RETURN:
+	case SDLK_KP_ENTER: return VK_RETURN;
+	case SDLK_KP_PLUS:
+	case SDLK_EQUALS: return VK_ADD;
+	case SDLK_KP_MINUS:
+	case SDLK_MINUS: return VK_SUBTRACT;
+	case SDLK_F1: return VK_F1;
+	case SDLK_F2: return VK_F2;
+	case SDLK_F3: return VK_F3;
+	case SDLK_F4: return VK_F4;
+	case SDLK_F5: return VK_F5;
+	case SDLK_F6: return VK_F6;
+	case SDLK_F10: return VK_F10;
+	case SDLK_F12: return VK_F12;
+	default:
+		if (key >= SDLK_a && key <= SDLK_z)
+			return (int)(key - SDLK_a + 'A');
+		if (key >= 'A' && key <= 'Z')
+			return (int)key;
+		return -1;
+	}
+}
+
+static void set_key(SDL_Keycode key, BOOL down)
+{
+	int vk = vk_from_sdl(key);
+	if (vk >= 0 && vk < 256)
+		g_keys.keyDown[vk] = down;
+}
 static SDL_Window* g_sdl_window = 0;
 static SDL_GLContext g_sdl_context = 0;
 static __thread int g_gl_current = 0;
@@ -107,6 +150,16 @@ int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 
 	Fps_Init();
 
+	if (selftest)
+	{
+		SDL_Event injected;
+		std::memset(&injected, 0, sizeof injected);
+		injected.type = SDL_KEYDOWN;
+		injected.key.state = SDL_PRESSED;
+		injected.key.keysym.sym = SDLK_LEFT;
+		SDL_PushEvent(&injected);
+	}
+
 	int frames = 0;
 	bool running = true;
 	Uint32 started = SDL_GetTicks();
@@ -117,9 +170,28 @@ int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 		{
 			if (event.type == SDL_QUIT)
 				running = false;
-			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
-				running = false;
+			else if (event.type == SDL_KEYDOWN)
+				set_key(event.key.keysym.sym, TRUE);
+			else if (event.type == SDL_KEYUP)
+				set_key(event.key.keysym.sym, FALSE);
+			else if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT && game_step == 4)
+			{
+				moving = true;
+				startx = event.button.x;
+				starty = event.button.y;
+			}
+			else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
+				moving = false;
+			else if (event.type == SDL_MOUSEMOTION && game_step == 4 && moving)
+			{
+				angle_x += (event.motion.x - startx) / 2.0;
+				angle_y += (event.motion.y - starty) / 2.0;
+				startx = event.motion.x;
+				starty = event.motion.y;
+			}
 		}
+		if (g_keys.keyDown[VK_ESCAPE])
+			running = false;
 
 		switch (game_step)
 		{
@@ -160,6 +232,7 @@ int macos_game_main(SDL_Window* sdl_window, SDL_GLContext context, int selftest)
 	}
 
 	std::printf("game_step: %d\n", game_step);
+	std::printf("input_left: %d\n", g_keys.keyDown[VK_LEFT] ? 1 : 0);
 	std::fflush(stdout);
 	Deinitialize();
 	return 0;
